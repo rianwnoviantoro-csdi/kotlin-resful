@@ -1,0 +1,64 @@
+### CREATE VALID PRODUCT
+
+POST http://localhost:8080/api/products
+X-Api-Key: R0ZUSNVuZQ
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id" : "A002",
+  "name" : "Huawei Matebook D15 Intel core i5 10th",
+  "price" : 6500000,
+  "quantity" : 50
+}
+
+### CREATE INVALID PRODUCT
+
+POST http://localhost:8080/api/products
+X-Api-Key: R0ZUSNVuZQ
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id" : "",
+  "name" : "Huawei Matebook D15",
+  "price" : 6500000,
+  "quantity" : 50
+}
+
+### GET VALID PRODUCT
+
+GET http://localhost:8080/api/products/A001
+X-Api-Key: R0ZUSNVuZQ
+Accept: application/json
+
+### GET INVALID PRODUCT
+
+GET http://localhost:8080/api/products/A002
+X-Api-Key: R0ZUSNVuZQ
+Accept: application/json
+
+### UPDATE PRODUCT
+
+PUT http://localhost:8080/api/products/A001
+X-Api-Key: R0ZUSNVuZQ
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name" : "Huawei Matebook D15 intel core i3 10th",
+  "price" : 6500000,
+  "quantity" : 50
+}
+
+### DELETE PRODUCT
+
+DELETE http://localhost:8080/api/products/A001
+X-Api-Key: R0ZUSNVuZQ
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/products?size=1&page=0
+X-Api-Key: R0ZUSNVuZQ
+Accept: application/json
