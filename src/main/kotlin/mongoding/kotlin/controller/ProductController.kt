@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api")
 class ProductController(val productService: ProductService) {
     @PostMapping(
-        value = ["/api/products"],
+        value = ["/products"],
         produces = ["application/json"],
         consumes = ["application/json"]
     )
@@ -28,7 +30,7 @@ class ProductController(val productService: ProductService) {
     }
 
     @GetMapping(
-        value = ["/api/products/{idProduct}"],
+        value = ["/products/{idProduct}"],
         produces = ["application/json"]
     )
     fun getProduct(@PathVariable("idProduct") id: String): WebResponse<ProductResponse> {
@@ -41,7 +43,7 @@ class ProductController(val productService: ProductService) {
     }
 
     @PutMapping(
-        value = ["/api/products/{idProduct}"],
+        value = ["/products/{idProduct}"],
         produces = ["application/json"],
         consumes = ["application/json"]
     )
@@ -55,7 +57,7 @@ class ProductController(val productService: ProductService) {
     }
 
     @DeleteMapping(
-        value = ["/api/products/{idProduct}"],
+        value = ["/products/{idProduct}"],
         produces = ["application/json"]
     )
     fun deleteProduct(@PathVariable("idProduct") id: String): WebResponse<String> {
@@ -69,19 +71,21 @@ class ProductController(val productService: ProductService) {
     }
 
     @GetMapping(
-        value = ["/api/products"],
+        value = ["/products"],
         produces = ["application/json"]
     )
     fun listProducts(
         @RequestParam(value = "size", defaultValue = "10") size: Int,
-        @RequestParam(value = "page", defaultValue = "0") page: Int
-    ): WebResponse<List<ProductResponse>> {
-        val productRequest = ListProductRequest(page, size)
+        @RequestParam(value = "page", defaultValue = "1") page: Int
+    ): WebPaginationResponse<List<ProductResponse>> {
+        val productRequest = ListProductRequest(page - 1, size)
         val productResponse = productService.list(productRequest)
 
-        return WebResponse(
+        return WebPaginationResponse(
             code = 200,
             status = "Success",
+            page = page,
+            perPage = size,
             data = productResponse
         )
     }

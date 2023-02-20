@@ -59,6 +59,6 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/products?size=1&page=0
+GET http://localhost:8080/api/products?size=1&page=1
 X-Api-Key: R0ZUSNVuZQ
 Accept: application/json
